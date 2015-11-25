@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mediumView;
     Button btn;
     ImageView img;
+    Switch sw;
 
     boolean booked_online;
     boolean entry;
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         btn=(Button)findViewById(R.id.button);
         img.setImageResource(R.drawable.green_tick);
         img.setVisibility(View.INVISIBLE);
-
+        sw=(Switch)findViewById(R.id.switch1);
+        sw.setChecked(true);
     }
 
     public void scanQR(View view){
@@ -66,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
         IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
         //integrator.addExtra("SCAN_WIDTH", 640);
         //integrator.addExtra("SCAN_HEIGHT", 480);
-        integrator.setCameraId(0);
+        if(sw.isChecked()) {
+            integrator.setCameraId(0);
+        }else{
+            integrator.setCameraId(1);
+        }
         //customize the prompt message before scanning
         integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
         integrator.initiateScan();
@@ -327,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setText("Have a nice day!");
         Toast.makeText(MainActivity.this, user_name+" "+car_number, Toast.LENGTH_SHORT).show();
     }
+
 
 
 }
